@@ -13,7 +13,7 @@ public class DatabaseManager {
     private static final String DB_PASSWORD = "Opkv@1754"; // Set your MySQL password
     
     private static DatabaseManager instance;
-    private Connection connection;
+    private static Connection connection;
     
     private DatabaseManager() throws SQLException {
         try {
@@ -25,7 +25,7 @@ public class DatabaseManager {
             props.setProperty("allowPublicKeyRetrieval", "true");
             props.setProperty("serverTimezone", "UTC");
             
-            this.connection = DriverManager.getConnection(DB_URL, props);
+            DatabaseManager.connection = DriverManager.getConnection(DB_URL, props);
             initializeDatabase();
         } catch (ClassNotFoundException e) {
             throw new SQLException("MySQL JDBC Driver not found", e);
@@ -39,7 +39,7 @@ public class DatabaseManager {
         return instance;
     }
     
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
     

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -577,17 +578,33 @@ public class BookMyTicketApp {
                     name,
                     age
                 );
-                
+
                 if (result.isSuccess()) {
-                    JOptionPane.showMessageDialog(passengerDialog, 
-                        "Booking successful!\n" + result.getMessage() + "\nBooking ID: " + result.getId(), 
-                        "Success", JOptionPane.INFORMATION_MESSAGE);
+                    // Show payment dialog
+                    BigDecimal bookingAmount = trainResult.getRoute().getPrice();
+                    PaymentDialog paymentDialog = new PaymentDialog(mainFrame, result.getId(), bookingAmount);
+                    paymentDialog.setVisible(true);
                     
                     passengerDialog.dispose();
                     parentDialog.dispose();
                     
                     // Refresh my bookings tab
                     refreshMyBookings();
+                     if (paymentDialog.isPaymentSuccessful()) {
+                        JOptionPane.showMessageDialog(passengerDialog, 
+                            "Booking and payment successful!\nBooking ID: " + result.getId(), 
+                            "Success", JOptionPane.INFORMATION_MESSAGE);
+                        
+                        passengerDialog.dispose();
+                        // parentDialog.dispose();
+                        
+                        // // Refresh my bookings tab
+                        // refreshMyBookings();
+                    } else {
+                        JOptionPane.showMessageDialog(passengerDialog, 
+                            "Payment was not completed. Booking has been cancelled.", 
+                            "Payment Cancelled", JOptionPane.WARNING_MESSAGE);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(passengerDialog, 
                         "Booking failed: " + result.getMessage(), 
