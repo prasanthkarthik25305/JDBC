@@ -23,7 +23,7 @@ public class WaitlistManager {
         
         String query = "INSERT INTO waitlist (user_id, train_id, route_id, position) VALUES (?, ?, ?, ?)";
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, userId);
             pstmt.setInt(2, trainId);
             pstmt.setInt(3, routeId);
@@ -47,7 +47,7 @@ public class WaitlistManager {
     private int getNextWaitlistPosition(int trainId, int routeId) throws SQLException {
         String query = "SELECT COALESCE(MAX(position), 0) + 1 FROM waitlist WHERE train_id = ? AND route_id = ? AND status = 'Waiting'";
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query)) {
             pstmt.setInt(1, trainId);
             pstmt.setInt(2, routeId);
             
@@ -67,7 +67,7 @@ public class WaitlistManager {
     public int getWaitlistPosition(int waitlistId) throws SQLException {
         String query = "SELECT position FROM waitlist WHERE waitlist_id = ?";
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query)) {
             pstmt.setInt(1, waitlistId);
             
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -91,7 +91,7 @@ public class WaitlistManager {
             ORDER BY position LIMIT 1
             """;
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(selectQuery)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(selectQuery)) {
             pstmt.setInt(1, trainId);
             pstmt.setInt(2, routeId);
             
@@ -102,7 +102,7 @@ public class WaitlistManager {
                     
                     // Update waitlist status
                     String updateQuery = "UPDATE waitlist SET status = 'Promoted' WHERE waitlist_id = ?";
-                    try (PreparedStatement updateStmt = dbManager.getConnection().prepareStatement(updateQuery)) {
+                    try (PreparedStatement updateStmt = DatabaseManager.getConnection().prepareStatement(updateQuery)) {
                         updateStmt.setInt(1, waitlistId);
                         updateStmt.executeUpdate();
                     }
@@ -124,7 +124,7 @@ public class WaitlistManager {
     private void updateWaitlistPositions(int trainId, int routeId) throws SQLException {
         String query = "UPDATE waitlist SET position = position - 1 WHERE train_id = ? AND route_id = ? AND status = 'Waiting' AND position > 1";
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query)) {
             pstmt.setInt(1, trainId);
             pstmt.setInt(2, routeId);
             pstmt.executeUpdate();
@@ -146,7 +146,7 @@ public class WaitlistManager {
             ORDER BY w.position
             """;
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query)) {
             pstmt.setInt(1, trainId);
             pstmt.setInt(2, routeId);
             
@@ -175,7 +175,7 @@ public class WaitlistManager {
     public boolean removeFromWaitlist(int waitlistId) throws SQLException {
         String query = "DELETE FROM waitlist WHERE waitlist_id = ?";
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query)) {
             pstmt.setInt(1, waitlistId);
             
             int rowsAffected = pstmt.executeUpdate();

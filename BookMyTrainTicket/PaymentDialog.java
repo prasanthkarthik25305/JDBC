@@ -327,6 +327,8 @@ public class PaymentDialog extends JDialog {
                     return false;
                 }
                 break;
+            default:
+                break;
         }
         return true;
     }

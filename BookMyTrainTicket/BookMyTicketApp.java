@@ -123,7 +123,7 @@ public class BookMyTicketApp {
         JButton loginButton = new JButton("Login");
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
         loginButton.setBackground(new Color(34, 139, 34));
-        loginButton.setForeground(Color.WHITE);
+        loginButton.setForeground(Color.BLACK);
         loginButton.setPreferredSize(new Dimension(100, 35));
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -216,7 +216,7 @@ public class BookMyTicketApp {
         JButton registerButton = new JButton("Register");
         registerButton.setFont(new Font("Arial", Font.BOLD, 14));
         registerButton.setBackground(new Color(34, 139, 34));
-        registerButton.setForeground(Color.WHITE);
+        registerButton.setForeground(Color.BLACK);
         
         JButton backButton = new JButton("Back to Login");
         backButton.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -315,7 +315,7 @@ public class BookMyTicketApp {
         
         JButton logoutButton = new JButton("Logout");
         logoutButton.setBackground(new Color(220, 20, 60));
-        logoutButton.setForeground(Color.WHITE);
+        logoutButton.setForeground(Color.BLACK);
         logoutButton.addActionListener(e -> logout());
         
         panel.add(welcomeLabel, BorderLayout.WEST);
@@ -336,7 +336,7 @@ public class BookMyTicketApp {
         JTextField destField = new JTextField(15);
         JButton searchButton = new JButton("Search Trains");
         searchButton.setBackground(new Color(30, 144, 255));
-        searchButton.setForeground(Color.WHITE);
+        searchButton.setForeground(Color.BLACK);
         
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridx = 0; gbc.gridy = 0;
@@ -396,7 +396,7 @@ public class BookMyTicketApp {
                     // Add booking button
                     JButton bookButton = new JButton("Book Seat for Selected Train");
                     bookButton.setBackground(new Color(34, 139, 34));
-                    bookButton.setForeground(Color.WHITE);
+                    bookButton.setForeground(Color.BLACK);
                     bookButton.addActionListener(bookEvent -> showSeatSelectionDialog(results));
                     
                     JPanel buttonPanel = new JPanel();
@@ -486,7 +486,7 @@ public class BookMyTicketApp {
             JPanel buttonPanel = new JPanel();
             JButton bookButton = new JButton("Book Selected Seat");
             bookButton.setBackground(new Color(34, 139, 34));
-            bookButton.setForeground(Color.WHITE);
+            bookButton.setForeground(Color.BLACK);
             
             bookButton.addActionListener(e -> {
                 // Find selected seat
@@ -544,7 +544,7 @@ public class BookMyTicketApp {
         
         JButton confirmButton = new JButton("Confirm Booking");
         confirmButton.setBackground(new Color(34, 139, 34));
-        confirmButton.setForeground(Color.WHITE);
+        confirmButton.setForeground(Color.BLACK);
         
         gbc.gridx = 0; gbc.gridy = 2;
         gbc.gridwidth = 2;

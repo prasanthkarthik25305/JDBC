@@ -8,10 +8,8 @@ import java.util.List;
  * Manages seat availability and operations
  */
 public class SeatAvailabilityManager {
-    private DatabaseManager dbManager;
-    
     public SeatAvailabilityManager() throws SQLException {
-        this.dbManager = DatabaseManager.getInstance();
+        DatabaseManager.getInstance();
     }
     
     /**
@@ -30,7 +28,7 @@ public class SeatAvailabilityManager {
             ORDER BY cl.class_type, c.compartment_name, s.seat_number
             """;
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query)) {
             pstmt.setInt(1, trainId);
             
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -68,7 +66,7 @@ public class SeatAvailabilityManager {
             ORDER BY cl.class_type, c.compartment_name, s.seat_number
             """;
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query)) {
             pstmt.setInt(1, trainId);
             
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -96,7 +94,7 @@ public class SeatAvailabilityManager {
     public boolean updateSeatAvailability(int seatId, boolean isAvailable) throws SQLException {
         String query = "UPDATE seats SET is_available = ? WHERE seat_id = ?";
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query)) {
             pstmt.setBoolean(1, isAvailable);
             pstmt.setInt(2, seatId);
             
@@ -118,7 +116,7 @@ public class SeatAvailabilityManager {
             WHERE s.seat_id = ?
             """;
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query)) {
             pstmt.setInt(1, seatId);
             
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -188,7 +186,7 @@ public class SeatAvailabilityManager {
             ORDER BY cl.class_type, c.compartment_name
             """;
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(compartmentQuery)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(compartmentQuery)) {
             pstmt.setInt(1, trainId);
             
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -226,7 +224,7 @@ public class SeatAvailabilityManager {
             ORDER BY s.seat_number
             """;
         
-        try (PreparedStatement pstmt = dbManager.getConnection().prepareStatement(query)) {
+        try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(query)) {
             pstmt.setInt(1, compartmentId);
             
             try (ResultSet rs = pstmt.executeQuery()) {
